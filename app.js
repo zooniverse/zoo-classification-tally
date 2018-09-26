@@ -15,7 +15,13 @@ panoptesChannel.bind('classification', function(data) {
    // console.log(data);
 
    var userID = data['user_id'];
-   console.log(userID);
+
+   function logSpecificUser() {
+     if (userID == 1804243) {
+       console.log(userID);
+     }
+   }
+   logSpecificUser()
 });
 
 
