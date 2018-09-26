@@ -8,21 +8,25 @@ var pusherDevKey = '95781402b5854a712a03';
 var pusher = new Pusher(PusherProdKey);
 var panoptesChannel = pusher.subscribe('panoptes');
 
-var classificationCounts = 0;
+var projectID = 3434
+
+var Count = 0
 
 // This code runs each time a classification event comes down
 // the panoptes pusher pipe
 
 panoptesChannel.bind('classification', function(data) {
-   // console.log(data);
+   console.log(data);
 
-   var userID = data['user_id'];
+   var classified_project = data['project_id'];
+
+   var currentCount = document.getElementById('id')
 
    function logSpecificUser() {
-     if (userID == 1804243) {
-       classificationCounts++
-       console.log(classificationCounts);
-     }
-   }
-   logSpecificUser()
+     if (classified_project === String(projectID)) {
+       Count = (Count + 1);
+       document.getElementById('counter').innerHTML = Count;
+     };
+   };
+   logSpecificUser();
 });
