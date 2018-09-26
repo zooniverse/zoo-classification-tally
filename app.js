@@ -10,9 +10,20 @@ var panoptesChannel = pusher.subscribe('panoptes');
 
 // This code runs each time a classification event comes down
 // the panoptes pusher pipe
+
 panoptesChannel.bind('classification', function(data) {
-   console.log(data);
+   // console.log(data);
+
+   var userID = data['user_id'];
+   console.log(userID);
 });
+
+
+
+
+
+
+
 
 // userKey: "user:1804243"
 // var pusher = new Pusher('51aa9c226f414d8b1a32', {
