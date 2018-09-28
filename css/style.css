@@ -1,0 +1,32 @@
+body {
+  font-family: 'Karla', sans-serif;
+  background-color: white;
+  margin: 0px;
+}
+
+h1 {
+  font-size: 72px;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+#banner {
+  background-color: #005D69;
+  top; 0
+  position: absolute;
+  height: 350px;
+}
+
+#counter {
+  top: 75%;
+
+}
+
+.centred {
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
