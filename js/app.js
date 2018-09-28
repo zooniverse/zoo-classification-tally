@@ -25,7 +25,9 @@ panoptesChannel.bind('classification', function(data) {
    function logSpecificUser() {
      if (classified_project === String(projectID)) {
        Count = (Count + 1);
-       document.getElementById('counter').innerHTML = Count;
+       $(document).ready(function() {
+         $("#counter").html(Count);
+       });
      };
    };
    logSpecificUser();
