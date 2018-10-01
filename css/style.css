@@ -4,29 +4,95 @@ body {
   margin: 0px;
 }
 
-h1 {
-  font-size: 72px;
-  color: white;
-  margin: 0;
-  text-align: center;
-}
-
-#banner {
-  background-color: #005D69;
-  top; 0
-  position: absolute;
-  height: 350px;
-}
-
-#counter {
-  top: 75%;
-
-}
-
 .centred {
-
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+#top-banner {
+  background-color: #005D69;
+  height: 200px;
+}
+
+h1 {
+  font-size: 100px;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+#counter-block {
+  display: inline;
+  position: absolute;
+  top: 28%;
+}
+
+#counter-info-block {
+  display: inline;
+  position: absolute;
+  top: 45%;
+}
+
+#counter {
+  font-size: 72px;
+}
+
+#counter-info {
+  font-size: 48px
+}
+
+#bottom-banner {
+  background-color: #005D69;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  height: 200px;
+}
+
+#total-count-block {
+  display: inline;
+  position: absolute;
+  top: 20%;
+}
+
+#total-count-info-block {
+  display: inline;
+  margin: 0;
+  top: 30%;
+}
+
+#total-count, #total-count-info {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+
+}
+
+
+/* #counter {
+  top: 75%;
+} */
+/*
+#exhibition-tally {
+  top: 85%;
+} */
+
+/* #classifications-here {
+  top: 95%;
+}
+
+h2{
+  margin:0;
+  text-align: center;
+}
+
+h3 {
+  margin: 0;
+  text-align: center;
+}
+
+#counter-block, #counter-info-block {
+  display: inline;
+} */
