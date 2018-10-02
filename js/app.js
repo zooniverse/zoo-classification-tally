@@ -13,11 +13,44 @@ var projectID = 4996
 
 var Count = 0
 
+// $.ajax({
+//   url: 'http://stats.zooniverse.org/counts/classification/day?project_id=4846&user_id=6&workflow_id=4441',
+//   type: 'GET',
+//   success: function(responseText){
+//     var jsonData = JSON.stringify(responseText);
+//     console.log(jsonData);
+//   }
+// })
+
+  $.getJSON("http://stats.zooniverse.org/counts/classification/day?env=production&project_id=4846&user_id=6&workflow_id=4441", function(data) {
+      console.log(data);
+  });
+
+// // Look up current tally
+// (function() {
+//   var panoptesAPI = "http://stats.zooniverse.org/counts/classification/year?";
+//   $.getJSON( panoptesAPI, {
+//     project_id: "4846",
+//     user_id: "6",
+//   })
+//   .done(function ( response ) {
+//     console.log(response);
+//   });
+// });
+
+
+
+
+
+$(document).ready(function() {
+  $("#counter").html('x');
+});
+
 // This code runs each time a classification event comes down
 // the panoptes pusher pipe
 
 panoptesChannel.bind('classification', function(data) {
-   console.log(data);
+   // console.log(data);
 
    var classified_project = data['project_id'];
 
