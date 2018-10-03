@@ -9,8 +9,8 @@ var pusherDevKey = '95781402b5854a712a03';
 var pusher = new Pusher(PusherProdKey);
 var panoptesChannel = pusher.subscribe('panoptes');
 
-// var projectID = 3434 Etch-a-Cell
-var projectID = 4996
+var projectID = 3434;
+// var projectID = 4996 ss
 
 var Count = 0
 
@@ -23,9 +23,10 @@ var Count = 0
 //   }
 // })
 
-  $.getJSON("http://stats.zooniverse.org/counts/classification/day?env=production&project_id=4846&user_id=6&workflow_id=4441", function(data) {
-      console.log(data);
-  });
+$.getJSON("http://stats.zooniverse.org/counts/classification/year?env=production&project_id=3434", function(data) {
+    // var obj = JSON.parse(data);
+    console.log(data.events_over_time.buckets[0].doc_count);
+});
 
 // // Look up current tally
 // (function() {
