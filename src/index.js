@@ -14,13 +14,22 @@ var projectID = 3434;
 
 var Count = 0
 
-
 console.log(window.location.search);
 
-$.getJSON("http://stats.zooniverse.org/counts/classification/year?project_id=3434", function(data) {
-    // var obj = JSON.parse(data);
-    console.log(data.events_over_time.buckets[0].doc_count);
-});
+var getClassificationCount = function(url) {
+  $.getJSON(url, function(data) {
+    var total_classifications = 0;
+    var stats_data = data.events_over_time.buckets;
+    for (var i in stats_data) {
+      total_classifications = total_classifications + parseInt(stats_data[i].doc_count);
+    };
+    return(total_classifications);
+  });
+}
+
+// Get current classifcation count
+getClassificationCount("http://stats.zooniverse.org/counts/classification/year?project_id=3434");
+
 
 
 $(document).ready(function() {
