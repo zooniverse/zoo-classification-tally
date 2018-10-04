@@ -1,6 +1,6 @@
 bin/*
 node_modules/*
 package-lock.json
-main.js
+dist/main.js
 webpack.config.js
-
+main.js
