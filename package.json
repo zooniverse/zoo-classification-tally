@@ -1,5 +1,5 @@
 {
-  "name": "etch-a-cell-counter",
+  "name": "zoo-classification-tally",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RonaCostello/Etch-a-cell-counter.git"
+    "url": "git+https://github.com/RonaCostello/zoo-classification-tally.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RonaCostello/Etch-a-cell-counter/issues"
+    "url": "https://github.com/RonaCostello/zoo-classification-tally/issues"
   },
-  "homepage": "https://github.com/RonaCostello/Etch-a-cell-counter#readme",
+  "homepage": "https://github.com/RonaCostello/zoo-classification-tally#readme",
   "dependencies": {
     "lodash": "^4.17.11",
     "panoptes-client": "^2.11.2"
