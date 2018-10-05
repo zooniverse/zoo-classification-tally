@@ -11,8 +11,13 @@ var urlProjectClassifications = `http://stats.zooniverse.org/counts/classificati
 
 var apiClient = require('panoptes-client/lib/api-client');
 
-var projectID = 4996;
-var userID = 1804243;
+//Set the project name
+apiClient.type('projects').get(projectID)
+  .then(function (project) {
+    $(document).ready(function() {
+      $("#project-name").html(project.display_name);
+    });
+  });
 
 //Declare two global classification count variables.
 window.appData = {
