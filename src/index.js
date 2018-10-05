@@ -28,29 +28,34 @@ apiClient.type('projects').get(projectID)
 
 //Declare two global classification count variables.
 window.appData = {
-  userCount: 0
+  userCount: 0,
+  projectCount: 0
 };
 
-// // Get the current classification count values and start count
-setStartCount(urlProjectUserClassifications, "#counter");
+// Get the current classification count values and start count
+initialisePage(urlProjectUserClassifications, urlProjectClassifications);
 
-function setStartCount(userQueryURL, container) {
-  $.getJSON(userQueryURL, function(data) {
+function initialisePage(userQueryURL, projectQueryURL) {
+  setStartingCount(userQueryURL, "#counter");
+  setStartingCount(projectQueryURL, "#total-count");
+  listenForClassifications();
+}
+
+function setStartingCount(url, container) {
+  $.getJSON(url, function(data) {
     var totalClassifications = 0;
     var statData = data.events_over_time.buckets;
     for (var i in statData) {
       totalClassifications = totalClassifications + parseInt(statData[i].doc_count);
     };
     window.appData.userCount = totalClassifications;
-    console.log(totalClassifications);
     $(document).ready(function() {
-      $(container).html(totalClassifications)
+      $(container).html(totalClassifications);
     });
-
-    listenForClassifications();
   });
-};
+}
 
+// Listen for panoptes classifications
 function listenForClassifications() {
   // This code runs each time a classification event comes down
   // the panoptes pusher pipe
