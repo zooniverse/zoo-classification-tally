@@ -36,7 +36,8 @@ h1 {
 }
 
 #counter {
-  font-size: 72px;
+  font-size: 128px;
+  margin: 0;
 }
 
 #counter-info {
@@ -69,30 +70,3 @@ h1 {
   margin: 0;
 
 }
-
-
-/* #counter {
-  top: 75%;
-} */
-/*
-#exhibition-tally {
-  top: 85%;
-} */
-
-/* #classifications-here {
-  top: 95%;
-}
-
-h2{
-  margin:0;
-  text-align: center;
-}
-
-h3 {
-  margin: 0;
-  text-align: center;
-}
-
-#counter-block, #counter-info-block {
-  display: inline;
-} */
