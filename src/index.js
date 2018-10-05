@@ -1,4 +1,11 @@
-import _ from 'lodash';
+import _ from "lodash";
+
+var PusherProdKey = "79e8e05ea522377ba6db";
+var pusherStagKey = "95781402b5854a712a03";
+var pusherDevKey = "95781402b5854a712a03";
+
+var pusher = new Pusher(PusherProdKey);
+var panoptesChannel = pusher.subscribe("panoptes");
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
 
