@@ -47,8 +47,12 @@ function setStartingCount(url, container) {
     var statData = data.events_over_time.buckets;
     for (var i in statData) {
       totalClassifications = totalClassifications + parseInt(statData[i].doc_count);
-    };
-    window.appData.userCount = totalClassifications;
+    }
+    if (container === "#counter") {
+      window.appData.userCount = totalClassifications;
+    } else {
+      window.appData.projectCount = totalClassifications;
+    }
     $(document).ready(function() {
       $(container).html(totalClassifications);
     });
@@ -65,6 +69,12 @@ function listenForClassifications() {
      var pusherUser = data['user_id'];
 
      function updateCount() {
+       if (pusherProject === String(projectID)) {
+         window.appData.projectCount++;
+         $(document).ready(function() {
+           $("#total-count").html(window.appData.projectCount);
+         });
+       }
        if (pusherProject === String(projectID) && pusherUser === String(userID)) {
          window.appData.userCount++;
          $(document).ready(function() {
