@@ -65,79 +65,8 @@ function listenForClassifications() {
          $(document).ready(function() {
            $("#counter").html(window.appData.userCount);
          });
-       };
-     };
+       }
+     }
      updateCount();
   });
 }
-
-
-
-
-//
-// step1_initialiseAppAndFetchStartingNumber('http://stats.zooniverse.org/counts/classification/year?project_id=4996&user_id=1804243', "#counter");
-//
-//
-//
-// var currentCount = document.getElementById("counter");
-// console.log(currentCount);
-//
-//
-//
-//
-// function step1_initialiseAppAndFetchStartingNumber(url, container) {
-//   $.getJSON(url, function(data) {
-//     var total_classifications = 0;
-//     var stats_data = data.events_over_time.buckets;
-//     for (var i in stats_data) {
-//       total_classifications = total_classifications + parseInt(stats_data[i].doc_count);
-//     };
-//     window.appData.count = total_classifications;
-//     $(document).ready(function(){
-//       $("#counter").html(total_classifications)
-//     });
-//
-//     step2_listenForFurtherAdditions();
-//   });
-// };
-//
-// function step2_listenForFurtherAdditions() {
-//   panoptesChannel.bind('classification', function(data) {
-//      // console.log(data);
-//
-//      var classified_project = data['project_id'];
-//
-//      function logSpecificUser() {
-//        if (classified_project === String(projectID)) {
-//          window.appData.count++;
-//          $(document).ready(function() {
-//            $("#counter").html(window.appData.count);
-//          });
-//        };
-//      };
-//      logSpecificUser();
-//   });
-// }
-//
-
-
-//
-// // This code runs each time a classification event comes down
-// // the panoptes pusher pipe
-// var currentCount = document.getElementById('counter');
-// console.log(currentCount);
-// panoptesChannel.bind('classification', function(data) {
-//    // console.log(data);
-//
-//    var classified_project = data['project_id'];
-//
-//    function logSpecificUser() {
-//      if (classified_project === String(projectID)) {
-//        Count = (Count + 1);
-//        $(document).ready(function() {
-//          $("#counter").html(Count);
-//        });
-//      };
-//    };
-//    logSpecificUser();
-// });
