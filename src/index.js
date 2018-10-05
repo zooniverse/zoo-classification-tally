@@ -2,27 +2,25 @@ import _ from 'lodash';
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
 
-var PusherProdKey = '79e8e05ea522377ba6db';
-var pusherStagKey = '95781402b5854a712a03';
-var pusherDevKey = '95781402b5854a712a03';
+var urlParams = new URLSearchParams(window.location.search);
+var projectID = urlParams.get("project_id");
+var userID = urlParams.get("user_id");
 
-var pusher = new Pusher(PusherProdKey);
-var panoptesChannel = pusher.subscribe('panoptes');
+var urlProjectUserClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
+var urlProjectClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
 
-// console.log(window.location.search);
+var apiClient = require('panoptes-client/lib/api-client');
 
 var projectID = 4996;
 var userID = 1804243;
 
-window.appData = {  //Declare a global variable. Not really a great idea, but hey.
+//Declare two global classification count variables.
+window.appData = {
   userCount: 0
 };
 
-// Get the current count values and start count
-var userQueryURL = "http://stats.zooniverse.org/counts/classification/year?project_id=4996&user_id=1804243";
-var projectQueryURL = "http://stats.zooniverse.org/counts/classification/year?project_id=4996&user_id=1804243";
-
-setStartCount(userQueryURL, "#counter");
+// // Get the current classification count values and start count
+setStartCount(urlProjectUserClassifications, "#counter");
 
 function setStartCount(userQueryURL, container) {
   $.getJSON(userQueryURL, function(data) {
