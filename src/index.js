@@ -24,6 +24,9 @@ apiClient.type('projects').get(projectID)
     $(document).ready(function() {
       $("#project-name").html(project.display_name);
     });
+    $(document).ready(function() {
+      $("#total-count-info").append(project.display_name);
+    });
   });
 
 //Declare two global classification count variables.
