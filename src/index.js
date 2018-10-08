@@ -10,6 +10,9 @@ var panoptesChannel = pusher.subscribe("panoptes");
 // Pusher.logToConsole = true;
 
 var urlParams = new URLSearchParams(window.location.search);
+if (!window.location.search) {
+  throw new Error("Need query params");
+}
 
 var projectID = urlParams.get("project_id");
 var username = urlParams.get("username");
