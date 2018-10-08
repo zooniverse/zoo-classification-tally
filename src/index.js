@@ -15,7 +15,6 @@ if (!window.location.search) {
 }
 
 var projectID = urlParams.get("project_id");
-var username = urlParams.get("username");
 var userID = urlParams.get("user_id");
 var startDate = urlParams.get("exhibit_start_date")
 
