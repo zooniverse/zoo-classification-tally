@@ -63,6 +63,8 @@ function checkValidUser() {
 function startApp() {
   if (projectID && userID) {
     initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+  } else if (projectID) {
+    initialisePage("", urlProjectClassifications);
   }
 }
 
