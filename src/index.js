@@ -29,32 +29,41 @@ window.appData = {
   projectCount: 0
 };
 
-//Set the project name and throw error if not valid project or user id
-apiClient.type('projects').get(projectID)
-  .then(function (project) {
-    $(document).ready(function() {
-      $("#project-name").html(project.display_name);
-    });
-    $(document).ready(function() {
-      $("#total-count-info").append(project.display_name);
-    });
-  })
-  .catch((err) => {
-    throw new Error("Not a valid project ID");
-  });
+checkValidProject();
 
-//Throw error if not valid user id
-apiClient.type('users').get(userID)
-  .then(function () {
-    console.log("");
-  })
-  .catch((err) => {
-    throw new Error("Not a valid user ID");
-  });
+function checkValidProject() {
+  //Set the project name and throw error if not valid project or user id
+  apiClient.type('projects').get(projectID)
+    .then(function (project) {
+      $(document).ready(function() {
+        $("#project-name").html(project.display_name);
+      });
+      $(document).ready(function() {
+        $("#total-count-info").append(project.display_name);
+      });
+      checkValidUser();
+    })
+    .catch((err) => {
+      throw new Error("Not a valid project ID");
+    });
+}
 
-// Get the current classification count values and start count
-if (projectID && userID) {
-  initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+function checkValidUser() {
+  //Throw error if not valid user id
+  apiClient.type('users').get(userID)
+    .then(function () {
+      console.log("");
+      startApp();
+    })
+    .catch((err) => {
+      throw new Error("Not a valid user ID");
+    });
+}
+
+function startApp() {
+  if (projectID && userID) {
+    initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+  }
 }
 
 function initialisePage(userQueryURL, projectQueryURL) {
