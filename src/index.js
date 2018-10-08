@@ -10,8 +10,11 @@ var panoptesChannel = pusher.subscribe("panoptes");
 // Pusher.logToConsole = true;
 
 var urlParams = new URLSearchParams(window.location.search);
+
 var projectID = urlParams.get("project_id");
+var username = urlParams.get("username");
 var userID = urlParams.get("user_id");
+var startDate = urlParams.get("exhibit_start_date")
 
 var urlProjectUserClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
 var urlProjectClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
