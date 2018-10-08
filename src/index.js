@@ -41,7 +41,9 @@ window.appData = {
 };
 
 // Get the current classification count values and start count
-initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+if (projectID && userID) {
+  initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+}
 
 function initialisePage(userQueryURL, projectQueryURL) {
   setStartingCount(userQueryURL, "#counter");
