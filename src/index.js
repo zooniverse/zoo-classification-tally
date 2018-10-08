@@ -23,7 +23,13 @@ var urlProjectClassifications = `http://stats.zooniverse.org/counts/classificati
 
 var apiClient = require('panoptes-client/lib/api-client');
 
-//Set the project name
+//Declare two global classification count variables.
+window.appData = {
+  userCount: 0,
+  projectCount: 0
+};
+
+//Set the project name and throw error if not valid project or user id
 apiClient.type('projects').get(projectID)
   .then(function (project) {
     $(document).ready(function() {
@@ -32,13 +38,19 @@ apiClient.type('projects').get(projectID)
     $(document).ready(function() {
       $("#total-count-info").append(project.display_name);
     });
+  })
+  .catch((err) => {
+    throw new Error("Not a valid project ID");
   });
 
-//Declare two global classification count variables.
-window.appData = {
-  userCount: 0,
-  projectCount: 0
-};
+//Throw error if not valid user id
+apiClient.type('users').get(userID)
+  .then(function () {
+    console.log("");
+  })
+  .catch((err) => {
+    throw new Error("Not a valid user ID");
+  });
 
 // Get the current classification count values and start count
 if (projectID && userID) {
