@@ -16,10 +16,8 @@ if (!window.location.search) {
 
 var projectID = urlParams.get("project_id");
 var userID = urlParams.get("user_id");
-var startDate = urlParams.get("exhibit_start_date")
-
-var urlProjectUserClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
-var urlProjectClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
+var username = urlParams.get("username")
+var startDate = urlParams.get("exhibit_start_date");
 
 var apiClient = require('panoptes-client/lib/api-client');
 
@@ -41,37 +39,54 @@ function checkValidProject() {
       $(document).ready(function() {
         $("#total-count-info").append(project.display_name);
       });
-      checkValidUser();
+      convertUsernameToID();
     })
     .catch((err) => {
       throw new Error("Not a valid project ID");
     });
 }
 
-function checkValidUser() {
+function convertUsernameToID() {
+  if (!userID && username) {
+    apiClient.type('users').get({ login: username})
+      .then(function (users) {
+        var userID = users[0].id;
+        checkValidUser(userID);
+      })
+      .catch((err) => {
+        throw new Error("Not a valid username")
+      })
+  } else {
+    checkValidUser(userID);
+  }
+}
+
+function checkValidUser(userID) {
   //Throw error if not valid user id
   apiClient.type('users').get(userID)
     .then(function () {
       console.log("");
-      startApp();
+      startApp(userID);
     })
     .catch((err) => {
       throw new Error("Not a valid user ID");
     });
 }
 
-function startApp() {
+function startApp(userID) {
+  var urlProjectUserClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
+  var urlProjectClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
   if (projectID && userID) {
-    initialisePage(urlProjectUserClassifications, urlProjectClassifications);
+    initialisePage(urlProjectUserClassifications, urlProjectClassifications, userID);
   } else if (projectID) {
-    initialisePage("", urlProjectClassifications);
+    initialisePage("", urlProjectClassifications, userID);
   }
 }
 
-function initialisePage(userQueryURL, projectQueryURL) {
+function initialisePage(userQueryURL, projectQueryURL, userID) {
   setStartingCount(userQueryURL, "#counter");
   setStartingCount(projectQueryURL, "#total-count");
-  listenForClassifications();
+  listenForClassifications(userID);
 }
 
 function setStartingCount(url, container) {
@@ -93,7 +108,7 @@ function setStartingCount(url, container) {
 }
 
 // Listen for panoptes classifications
-function listenForClassifications() {
+function listenForClassifications(userID) {
   // This code runs each time a classification event comes down
   // the panoptes pusher pipe
   panoptesChannel.bind('classification', function(data) {
