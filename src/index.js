@@ -54,8 +54,9 @@ function convertUsernameToID() {
         checkValidUser(userID);
       })
       .catch((err) => {
-        throw new Error("Not a valid username")
-      })
+        printNotValidUser()
+        throw new Error("Not a valid username");
+      });
   } else {
     checkValidUser(userID);
   }
@@ -69,6 +70,7 @@ function checkValidUser(userID) {
       startApp(userID);
     })
     .catch((err) => {
+      printNotValidUser()
       throw new Error("Not a valid user ID");
     });
 }
@@ -131,5 +133,11 @@ function listenForClassifications(userID) {
        }
      }
      updateCount();
+  });
+}
+
+function printNotValidUser () {
+  $(document).ready(function() {
+    $("#counter").html("not a valid user");
   });
 }
