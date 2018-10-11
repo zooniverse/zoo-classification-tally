@@ -14,6 +14,8 @@ if (!window.location.search) {
   throw new Error("Need query params");
 }
 
+console.log("build1.0");
+
 var projectID = urlParams.get("project_id");
 var userID = urlParams.get("user_id");
 var username = urlParams.get("username")
@@ -76,8 +78,8 @@ function checkValidUser(userID) {
 }
 
 function startApp(userID) {
-  var urlProjectUserClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
-  var urlProjectClassifications = `http://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
+  var urlProjectUserClassifications = `https://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
+  var urlProjectClassifications = `https://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
   if (projectID && userID) {
     initialisePage(urlProjectUserClassifications, urlProjectClassifications, userID);
   } else if (projectID) {
