@@ -15,6 +15,7 @@ if (!window.location.search) {
 }
 
 var projectID = urlParams.get("project_id");
+var projectName = urlParams.get("project_name");
 var userID = urlParams.get("user_id");
 var username = urlParams.get("username")
 var startDate = urlParams.get("exhibit_start_date");
@@ -28,6 +29,13 @@ window.appData = {
 };
 
 checkValidProject();
+
+function convertProjectNameToID() {
+  if (!projectID && projectName) {
+    apiClient.type('projects').get({ display_name: projectName.replace(/\s+/g, '-').toLowerCase()})
+      .then(function)
+  }
+}
 
 function checkValidProject() {
   //Set the project name and throw error if not valid project or user id
