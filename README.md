@@ -1,14 +1,6 @@
 # Classification tally
 
-## Development and deployment
-
 A counter which shows the number of classifications on a project by a single user.
-
-`npm install` installs dependencies
-
-`npm start` builds and runs the site locally. N.B this runs on local.zooniverse.org to prevent a CORS error while trying to access the Zooniverse stats API.
-
-`npm deploy` builds and deploys to https://tally.zooniverse.org/
 
 ## Querying for a project and user
 
@@ -35,3 +27,11 @@ https://tally.zooniverse.org?project_id=[projectid]&user_id=[userid]
 - #### username
 
   For example `username=iam1234`
+
+## Development and deployment
+
+`npm install` installs dependencies
+
+`npm start` builds and runs the site locally. N.B this runs on local.zooniverse.org to prevent a CORS error while trying to access the Zooniverse stats API.
+
+`npm deploy` builds and deploys to https://tally.zooniverse.org/
