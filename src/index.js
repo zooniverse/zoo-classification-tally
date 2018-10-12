@@ -14,8 +14,6 @@ if (!window.location.search) {
   throw new Error("Need query params");
 }
 
-console.log("build1.0");
-
 var projectID = urlParams.get("project_id");
 var userID = urlParams.get("user_id");
 var username = urlParams.get("username")
