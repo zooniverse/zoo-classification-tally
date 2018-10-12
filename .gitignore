@@ -5,3 +5,4 @@ dist/main.js
 webpack.config.js
 main.js
 dist/main.*.js
+dist/*
