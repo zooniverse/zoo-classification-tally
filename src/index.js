@@ -22,20 +22,34 @@ var startDate = urlParams.get("exhibit_start_date");
 
 var apiClient = require('panoptes-client/lib/api-client');
 
+console.log(projectName.replace(/-/g, ' '));
+
 //Declare two global classification count variables.
 window.appData = {
   userCount: 0,
   projectCount: 0
 };
 
-checkValidProject();
+// checkValidProject();
+convertProjectNameToID();
 
 function convertProjectNameToID() {
   if (!projectID && projectName) {
-    apiClient.type('projects').get({ display_name: projectName.replace(/\s+/g, '-').toLowerCase()})
-      .then(function)
+    apiClient.type('projects').get({ display_name: "Etch a Cell"})
+      .then(function (project) {
+        console.log(project)
+      });
   }
 }
+
+// function convertProjectNameToID() {
+//   if (!projectID && projectName) {
+//     apiClient.type('projects').get({ display_name: projectName.replace(/-/g, ' '); })
+//       .then(function (projects) {
+//         console.log(projects);
+//       });
+//   }
+// }
 
 function checkValidProject() {
   //Set the project name and throw error if not valid project or user id
