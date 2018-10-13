@@ -2,6 +2,8 @@
 
 A counter which shows the number of classifications on a project by a single user.
 
+https://tally.zooniverse.org/
+
 ## Querying for a project and user
 
 Querying for a particular project or user is done via query parameters in the url:
@@ -13,10 +15,6 @@ https://tally.zooniverse.org?project_id=[projectid]&user_id=[userid]
 - #### project_id
 
   For example `project_id=4996` (snapshot serengeti)
-
-- #### project_name
-
-  For example 'project_name=snapshot-serengeti'
 
 ### Query parameters for user
 
