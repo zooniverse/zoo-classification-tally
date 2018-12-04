@@ -9,6 +9,7 @@ https://tally.zooniverse.org/
 Querying for a particular project or user is done via query parameters in the url:
 
 https://tally.zooniverse.org?project_id=[projectid]&user_id=[userid]
+https://tally.zooniverse.org?project_id=[projectid]&username=[username]
 
 ### Query parameters for project
 
