@@ -4,12 +4,18 @@ A counter which shows the number of classifications on a project by a single use
 
 https://tally.zooniverse.org/
 
-## Querying for a project and user
+## Modifying the behaviour of the Tally app
 
-Querying for a particular project or user is done via query parameters in the url:
+You can change the behaviour of the app by passing in parameters via the website URL. In particular you can Only show details for:
+  1. A particular project
+  0. A particular user
+  2. Or modify what default text is shown on the screen
 
 https://tally.zooniverse.org?project_id=[projectid]&user_id=[userid]
 https://tally.zooniverse.org?project_id=[projectid]&username=[username]
+https://tally.zooniverse.org?project_id=[projectid]&text=[Show me this text]
+
+Note the above and how query params must start with a `?` character and must be separated with an `&` sign, more details can be found https://en.wikipedia.org/wiki/Query_string
 
 ### Query parameters for project
 
@@ -26,6 +32,11 @@ https://tally.zooniverse.org?project_id=[projectid]&username=[username]
 - #### username
 
   For example `username=iam1234`
+
+### Query parameters for text
+- #### text to display
+
+  For example `?text=Show me this text`
 
 ## Development and deployment
 

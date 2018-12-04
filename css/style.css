@@ -1,65 +1,59 @@
 body {
   font-family: 'Karla', sans-serif;
   background-color: white;
-  margin: 0px;
 }
 
 .centred {
-  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+#container {
+  display: block;
+  height: 100%;
+  margin: 1%;
+}
+
 #top-banner {
   background-color: #005D69;
-  height: 200px;
+  height: 30vh;
+}
+
+#exhibition-tally {
+  padding-top: 2%;
+  height: 30%;
+}
+
+#counter-block, #counter-info-block {
+  padding-bottom: 3%;
 }
 
 h1 {
-  font-size: 100px;
   color: white;
   margin: 0;
   text-align: center;
 }
 
-#counter-block {
-  display: inline;
-  position: absolute;
-  top: 31%;
-}
-
-#counter-info-block {
-  display: inline;
-  position: absolute;
-  top: 45%;
-}
-
 #counter {
-  font-size: 128px;
-  margin: 0;
+  font-size: 8em;
 }
 
 #counter-info {
-  font-size: 48px
+  font-size: 4em;
 }
 
 #bottom-banner {
   background-color: #005D69;
-  bottom: 0;
-  position: fixed;
-  width: 100%;
-  height: 200px;
+  height: 30vh;
 }
 
 #total-count-block {
-  display: inline;
-  position: absolute;
   top: 20%;
 }
 
 #total-count-info-block {
-  display: inline;
   margin: 0;
   top: 30%;
 }
