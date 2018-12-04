@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Pusher from 'pusher-js';
 import apiClient from 'panoptes-client/lib/api-client'
 
+import '../css/style.css';
+
 //Declare two global classification count variables.
 window.appData = {
   updateFromStream: false,

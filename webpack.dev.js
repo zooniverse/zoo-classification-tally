@@ -7,6 +7,14 @@ module.exports = {
   entry: {
     app: './src/index.js'
   },
+  module:{
+    rules:[
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      }
+    ]
+  },
   devServer: {
     host: 'local.zooniverse.org',
     port: 8080,
