@@ -12,17 +12,22 @@ body {
 
 #container {
   display: block;
-  height: 100vh;
+  height: 100%;
   margin: 1%;
 }
 
 #top-banner {
   background-color: #005D69;
-  height: 30%;
+  height: 30vh;
 }
 
 #exhibition-tally {
-  height: 40%;
+  padding-top: 2%;
+  height: 30%;
+}
+
+#counter-block, #counter-info-block {
+  padding-bottom: 3%;
 }
 
 h1 {
@@ -31,26 +36,17 @@ h1 {
   text-align: center;
 }
 
-#counter-block {
-  /* top: 31%; */
-}
-
-#counter-info-block {
-  /* top: 45%; */
-}
-
 #counter {
-  font-size: 128px;
-  margin: 0;
+  font-size: 8em;
 }
 
 #counter-info {
-  font-size: 48px
+  font-size: 4em;
 }
 
 #bottom-banner {
   background-color: #005D69;
-  height: 30%;
+  height: 30vh;
 }
 
 #total-count-block {

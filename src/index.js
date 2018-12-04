@@ -6,14 +6,15 @@ import apiClient from 'panoptes-client/lib/api-client'
 
 //Declare two global classification count variables.
 window.appData = {
-  loadedInitialCounts: false,
+  updateFromStream: false,
   userCount: 0,
   projectCount: 0,
   totalClassificationsCount: 0,
   classificationCountsThisSession: 0,
   projectID: null,
   userID: null,
-  userName: null
+  userName: null,
+  userText: null
 };
 
 // static counts from home page
@@ -30,8 +31,7 @@ const panoptesChannel = pusher.subscribe("panoptes");
 // This code runs each time a classification event comes down
 // the panoptes pusher pipe
 panoptesChannel.bind('classification', function(data) {
-   if (window.appData.loadedInitialCounts === true) {
-     console.log
+   if (window.appData.updateFromStream === true) {
      updateCount(data);
    }
 });
@@ -86,7 +86,7 @@ function countAllZooniverseClassifications() {
     }
     window.appData.totalClassificationsCount = classificationsCount
     $("#total-count").html(formattedTotalClassificationsCount());
-    window.appData.loadedInitialCounts = true;
+    window.appData.updateFromStream = true;
   });
 }
 
@@ -108,11 +108,6 @@ function checkValidUser() {
   }
 
   return apiClient.type('users').get(params)
-    .then(function (users) {
-      console.log('found the user with ID' + loadedUserId())
-      window.appData.UserID = window.appData.UserID || users[0].id
-      window.appData.userName = window.appData.userName || users[0].login
-    })
 }
 
 function projectStatsUrl() {
@@ -124,6 +119,7 @@ function setProjectCount() {
     .done(function(data) {
       window.appData.projectCount = extractCountData(data);
       $("#total-count").html(formattedProjectCount());
+      window.appData.updateFromStream = true;
     });
 }
 
@@ -134,6 +130,7 @@ function setUserCountDetails() {
       window.appData.userCount = extractCountData(data);
       $("#counter").html(formattedUserCount());
       $("#counter-info").html(loadedUserName());
+      window.appData.updateFromStream = true;
     });
 }
 
@@ -151,10 +148,7 @@ function updateCount(data) {
   var pusherProject = data['project_id'];
   var pusherUser = data['user_id'];
 
-  if (!loadedProjectId()) {
-    window.appData.classificationCountsThisSession++;
-    $("#counter").html(formattedClassificationCountsThisSession());
-  } else {
+  if (loadedProjectId()) {
     var newProjectClassification = pusherProject === loadedProjectId();
     var newUserClassification = pusherUser === loadedUserId();
     if(newProjectClassification) {
@@ -165,37 +159,50 @@ function updateCount(data) {
       window.appData.userCount++;
       $("#counter").html(formattedUserCount());
     }
+  } else {
+    window.appData.classificationCountsThisSession++;
+    window.appData.totalClassificationsCount++;
+    $("#counter").html(formattedClassificationCountsThisSession());
+    $("#total-count").html(formattedTotalClassificationsCount());
   }
+}
+
+function setupZooWideData() {
+  $("#project-name").html('Zooniverse');
+  $("#counter").html(formattedClassificationCountsThisSession());
+  $("#counter-info").html("This session")
+  countAllZooniverseClassifications();
 }
 
 // entry point of the code - start by setting the default counts
 $(document).ready(function() {
-  if (!loadedProjectId()) {
-    $("#total-count").html("Loading")
-  }
+  $("#total-count").html("Loading")
+  $("#counter-info").html("Loading")
 
   if (!window.location.search) {
-    $("#project-name").html('Zooniverse');
-    $("#counter").html(formattedClassificationCountsThisSession());
-    countAllZooniverseClassifications();
+    setupZooWideData()
   } else {
     const urlParams = new URLSearchParams(window.location.search);
     window.appData.projectID = urlParams.get("project_id");
     window.appData.userID = urlParams.get("user_id");
     window.appData.userName = urlParams.get("user_name")
+    window.appData.userText = urlParams.get("text")
 
-    // ideally these chain together
-    var projectName = null;
     if (loadedProjectId()) {
       checkValidProject()
         .then(function (projectName) {
-          $("#project-name").html(projectName);
           setProjectCount();
-          // test if we have a valid details - if so set their counts
+          $("#project-name").html(projectName);
+          // test if we have a valid user details
           if (loadedUserId() || loadedUserName()) {
             checkValidUser()
+              .then(function (users) {
+                window.appData.userID = window.appData.userID || users[0].id
+                window.appData.userName = window.appData.userName || users[0].login
+                console.log('found the user with ID' + loadedUserId())
+              })
               .then(function () {
-                // we have a valid user
+                // we have a valid user, set the counters
                 setUserCountDetails();
               })
               .catch((err) => {
@@ -204,6 +211,7 @@ $(document).ready(function() {
                   `not a valid user: ${window.appData.userID || window.appData.userName}`
                 );
               })
+
           }
         })
         .catch((err) => {
@@ -211,7 +219,7 @@ $(document).ready(function() {
           $("#project-name").html("Not a valid project ID");
         });
     } else {
-      projectName = 'Please specify a project to tally counts on'
+      var projectName = 'Please specify a project to tally counts on'
       $("#project-name").html(projectName);
       throw new Error("Not a valid project ID");
     }
