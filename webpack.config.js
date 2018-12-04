@@ -3,9 +3,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  // externals: {
-  //   jquery: 'jQuery'
-  // },
+  module:{
+    rules:[
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      }
+    ]
+  },
+  externals: {
+    jquery: 'jQuery'
+  },
   plugins: [
     new HtmlWebpackPlugin({
       hash: true,
