@@ -2,6 +2,7 @@ import _ from "lodash";
 import DOMPurify from 'dompurify';
 import $ from 'jquery';
 import Pusher from 'pusher-js';
+import apiClient from 'panoptes-client/lib/api-client'
 
 //Declare two global classification count variables.
 window.appData = {
@@ -9,6 +10,7 @@ window.appData = {
   userCount: 0,
   projectCount: 0,
   totalClassificationsCount: 0,
+  classificationCountsThisSession: 0,
   projectID: null,
   userID: null,
   userName: null
@@ -34,8 +36,6 @@ panoptesChannel.bind('classification', function(data) {
    }
 });
 
-var apiClient = require('panoptes-client/lib/api-client');
-
 const statsURLPrefix = 'https://stats.zooniverse.org/counts/classification/year';
 
 function formattedUserCount() {
@@ -44,6 +44,10 @@ function formattedUserCount() {
 
 function formattedProjectCount() {
   return window.appData.projectCount.toLocaleString()
+}
+
+function formattedClassificationCountsThisSession() {
+  return window.appData.classificationCountsThisSession.toLocaleString()
 }
 
 function formattedTotalClassificationsCount() {
@@ -148,8 +152,8 @@ function updateCount(data) {
   var pusherUser = data['user_id'];
 
   if (!loadedProjectId()) {
-    window.appData.totalClassificationsCount++;
-    $("#total-count").html(formattedTotalClassificationsCount());
+    window.appData.classificationCountsThisSession++;
+    $("#counter").html(formattedClassificationCountsThisSession());
   } else {
     var newProjectClassification = pusherProject === loadedProjectId();
     var newUserClassification = pusherUser === loadedUserId();
@@ -172,6 +176,7 @@ $(document).ready(function() {
 
   if (!window.location.search) {
     $("#project-name").html('Zooniverse');
+    $("#counter").html(formattedClassificationCountsThisSession());
     countAllZooniverseClassifications();
   } else {
     const urlParams = new URLSearchParams(window.location.search);
