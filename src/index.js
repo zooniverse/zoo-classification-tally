@@ -56,7 +56,7 @@ function formattedTotalClassificationsCount() {
   return count.toLocaleString()
 }
 
-function ID2String(id) {
+function Input2String(id) {
   if (id === null) {
     return null;
   } else {
@@ -65,15 +65,19 @@ function ID2String(id) {
 }
 
 function loadedProjectId() {
-  return ID2String(window.appData.projectID);
+  return Input2String(window.appData.projectID);
 }
 
 function loadedUserId() {
-  return ID2String(window.appData.userID);
+  return Input2String(window.appData.userID);
 }
 
 function loadedUserName() {
-  return ID2String(window.appData.userName);
+  return Input2String(window.appData.userName);
+}
+
+function loadedUserText() {
+  return Input2String(window.appData.userText);
 }
 
 function countAllZooniverseClassifications() {
@@ -188,6 +192,11 @@ $(document).ready(function() {
     window.appData.userName = urlParams.get("user_name")
     window.appData.userText = urlParams.get("text")
 
+    if (loadedUserText()) {
+      var sanitizedInput = DOMPurify.sanitize(loadedUserText());
+      // var sanitizedInput = loadedUserText();
+      $("#total-count-info").html(sanitizedInput);
+    }
     if (loadedProjectId()) {
       checkValidProject()
         .then(function (projectName) {
