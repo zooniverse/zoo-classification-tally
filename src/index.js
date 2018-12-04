@@ -1,17 +1,27 @@
 import _ from "lodash";
+import DOMPurify from 'dompurify';
+import $ from 'jquery';
 
+import Pusher from 'pusher-js';
 var PusherProdKey = "79e8e05ea522377ba6db";
-var pusherStagKey = "95781402b5854a712a03";
-var pusherDevKey = "95781402b5854a712a03";
-
 var pusher = new Pusher(PusherProdKey);
 var panoptesChannel = pusher.subscribe("panoptes");
-// Enable pusher logging - don't include this in production
-// Pusher.logToConsole = true;
 
+var apiClient = require('panoptes-client/lib/api-client');
+
+
+window.appData = {
+  userCount: 0,
+  projectCount: 0
+};
+
+
+//Declare two global classification count variables.
 var urlParams = new URLSearchParams(window.location.search);
 if (!window.location.search) {
-  throw new Error("Need query params");
+  const queryParamsErrorMsg = 'Help!<br><br>Please set the query params to configure this application';
+  console.log(queryParamsErrorMsg)
+  $("#total-count-info").html(queryParamsErrorMsg);
 }
 
 var projectID = urlParams.get("project_id");
@@ -19,26 +29,14 @@ var userID = urlParams.get("user_id");
 var username = urlParams.get("username")
 var startDate = urlParams.get("exhibit_start_date");
 
-var apiClient = require('panoptes-client/lib/api-client');
-
-//Declare two global classification count variables.
-window.appData = {
-  userCount: 0,
-  projectCount: 0
-};
-
 checkValidProject();
 
 function checkValidProject() {
   //Set the project name and throw error if not valid project or user id
   apiClient.type('projects').get(projectID)
     .then(function (project) {
-      $(document).ready(function() {
-        $("#project-name").html(project.display_name);
-      });
-      $(document).ready(function() {
-        $("#total-count-info").append(project.display_name);
-      });
+      $("#project-name").html(project.display_name);
+      $("#total-count-info").append(project.display_name);
       convertUsernameToID();
     })
     .catch((err) => {
@@ -103,9 +101,7 @@ function setStartingCount(url, container) {
     } else {
       window.appData.projectCount = totalClassifications;
     }
-    $(document).ready(function() {
-      $(container).html(totalClassifications);
-    });
+    $(container).html(totalClassifications);
   });
 }
 
@@ -121,23 +117,17 @@ function listenForClassifications(userID) {
      function updateCount() {
        if (pusherProject === String(projectID)) {
          window.appData.projectCount++;
-         $(document).ready(function() {
-           $("#total-count").html(window.appData.projectCount);
-         });
+         $("#total-count").html(window.appData.projectCount);
        }
        if (pusherProject === String(projectID) && pusherUser === String(userID)) {
          window.appData.userCount++;
-         $(document).ready(function() {
-           $("#counter").html(window.appData.userCount);
-         });
+         $("#counter").html(window.appData.userCount);
        }
      }
      updateCount();
   });
 }
 
-function printNotValidUser () {
-  $(document).ready(function() {
-    $("#counter").html("not a valid user");
-  });
+function printNotValidUser() {
+  $("#counter").html("not a valid user");
 }
