@@ -9,19 +9,42 @@ var panoptesChannel = pusher.subscribe("panoptes");
 
 var apiClient = require('panoptes-client/lib/api-client');
 
-
-window.appData = {
-  userCount: 0,
-  projectCount: 0
-};
-
+const statsURLPrefix = 'https://stats.zooniverse.org/counts/classification/year';
 
 //Declare two global classification count variables.
+window.appData = {
+  userCount: 0,
+  projectCount: 0,
+  totalClassificationsCount: 0
+};
+
+function formattedUserCount() {
+  return window.appData.userCount.toLocaleString()
+}
+
+function formattedProjectCount() {
+  return window.appData.projectCount.toLocaleString()
+}
+
+function formattedTotalClassificationsCount() {
+  return window.appData.totalClassificationsCount.toLocaleString()
+}
+
 var urlParams = new URLSearchParams(window.location.search);
 if (!window.location.search) {
-  const queryParamsErrorMsg = 'Help!<br><br>Please set the query params to configure this application';
-  console.log(queryParamsErrorMsg)
-  $("#total-count-info").html(queryParamsErrorMsg);
+  $("#total-count").html(formattedTotalClassificationsCount());
+  countAllZooniverseClassifications()
+  .done(function(data) {
+    let classificationsCount = 0;
+    var statData = data.events_over_time.buckets;
+    for (var i in statData) {
+      var perYearCount = parseInt(statData[i].doc_count)
+      classificationsCount = classificationsCount + perYearCount;
+    }
+    window.appData.totalClassificationsCount = classificationsCount
+    $("#total-count").html(formattedTotalClassificationsCount());
+    startApp();
+  });
 }
 
 var projectID = urlParams.get("project_id");
@@ -29,15 +52,22 @@ var userID = urlParams.get("user_id");
 var username = urlParams.get("username")
 var startDate = urlParams.get("exhibit_start_date");
 
+checkValidUser();
 checkValidProject();
 
+
+function countAllZooniverseClassifications() {
+  return $.getJSON(statsURLPrefix);
+}
+
 function checkValidProject() {
+  // TODO: check we have a  project id beofre trying to do things with it
+
   //Set the project name and throw error if not valid project or user id
   apiClient.type('projects').get(projectID)
     .then(function (project) {
       $("#project-name").html(project.display_name);
       $("#total-count-info").append(project.display_name);
-      convertUsernameToID();
     })
     .catch((err) => {
       throw new Error("Not a valid project ID");
@@ -48,24 +78,20 @@ function convertUsernameToID() {
   if (!userID && username) {
     apiClient.type('users').get({ login: username})
       .then(function (users) {
-        var userID = users[0].id;
-        checkValidUser(userID);
+        userID = users[0].id;
       })
       .catch((err) => {
         printNotValidUser()
         throw new Error("Not a valid username");
       });
-  } else {
-    checkValidUser(userID);
   }
 }
 
-function checkValidUser(userID) {
-  //Throw error if not valid user id
+function checkValidUser() {
+  convertUsernameToID();
   apiClient.type('users').get(userID)
     .then(function () {
-      console.log("");
-      startApp(userID);
+      console.log('found the user with ID' + userID)
     })
     .catch((err) => {
       printNotValidUser()
@@ -73,19 +99,15 @@ function checkValidUser(userID) {
     });
 }
 
-function startApp(userID) {
-  var urlProjectUserClassifications = `https://stats.zooniverse.org/counts/classification/year?project_id=${projectID}&user_id=${userID}`;
-  var urlProjectClassifications = `https://stats.zooniverse.org/counts/classification/year?project_id=${projectID}`;
+function startApp() {
+  var urlProjectClassifications = `${statsURLPrefix}?project_id=${projectID}`;
+  var urlProjectUserClassifications = `${urlProjectClassifications}&user_id=${userID}`;
   if (projectID && userID) {
-    initialisePage(urlProjectUserClassifications, urlProjectClassifications, userID);
+    setStartingCount(urlProjectUserClassifications, "#counter");
+    setStartingCount(urlProjectClassifications, "#total-count");
   } else if (projectID) {
-    initialisePage("", urlProjectClassifications, userID);
+    setStartingCount(urlProjectClassifications, "#total-count");
   }
-}
-
-function initialisePage(userQueryURL, projectQueryURL, userID) {
-  setStartingCount(userQueryURL, "#counter");
-  setStartingCount(projectQueryURL, "#total-count");
   listenForClassifications(userID);
 }
 
@@ -105,6 +127,25 @@ function setStartingCount(url, container) {
   });
 }
 
+function updateCount(pusherProject, pusherUser) {
+  if (projectID === null) {
+    window.appData.totalClassificationsCount++;
+    $("#total-count").html(formattedTotalClassificationsCount());
+    return;
+  }
+
+  var newProjectClassification = pusherProject === String(projectID)
+  var newUserClassification = pusherUser === String(userID)
+  if(newProjectClassification) {
+    window.appData.projectCount++;
+    $("#total-count").html(formattedProjectCount());
+  }
+  if (newProjectClassification && newUserClassification) {
+    window.appData.userCount++;
+    $("#counter").html(formattedUserCount());
+  }
+}
+
 // Listen for panoptes classifications
 function listenForClassifications(userID) {
   // This code runs each time a classification event comes down
@@ -113,18 +154,7 @@ function listenForClassifications(userID) {
      // console.log(data);
      var pusherProject = data['project_id'];
      var pusherUser = data['user_id'];
-
-     function updateCount() {
-       if (pusherProject === String(projectID)) {
-         window.appData.projectCount++;
-         $("#total-count").html(window.appData.projectCount);
-       }
-       if (pusherProject === String(projectID) && pusherUser === String(userID)) {
-         window.appData.userCount++;
-         $("#counter").html(window.appData.userCount);
-       }
-     }
-     updateCount();
+     updateCount(pusherProject, pusherUser);
   });
 }
 
