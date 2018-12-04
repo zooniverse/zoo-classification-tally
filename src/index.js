@@ -220,7 +220,9 @@ $(document).ready(function() {
                   `not a valid user: ${window.appData.userID || window.appData.userName}`
                 );
               })
-
+          }
+          else {
+            $("#counter-info").html('unknown user')
           }
         })
         .catch((err) => {
