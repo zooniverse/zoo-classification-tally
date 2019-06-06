@@ -29,14 +29,14 @@ Note the above and how query params must start with a `?` character and must be 
 
   For example `user_id=1234`
 
-- #### username
+- #### user_name
 
-  For example `username=iam1234`
+  For example `user_name=iam1234`
 
 ### Query parameters for text
 - #### text to display
 
-  For example `?text=Show me this text`
+  For example `?text=Show%20me%20this%20text`
 
 ## Development and deployment
 
