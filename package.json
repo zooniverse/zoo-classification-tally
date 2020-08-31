@@ -23,7 +23,7 @@
   "homepage": "https://github.com/RonaCostello/zoo-classification-tally#readme",
   "dependencies": {
     "dompurify": "^1.0.8",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "panoptes-client": "^2.11.2",
     "pusher-js": "^4.3.1"
   },
