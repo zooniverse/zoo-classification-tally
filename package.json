@@ -24,7 +24,7 @@
   "dependencies": {
     "dompurify": "^2.0.14",
     "lodash": "^4.17.19",
-    "panoptes-client": "^2.11.2",
+    "panoptes-client": "^3.3.0",
     "pusher-js": "^4.3.1"
   },
   "devDependencies": {
