@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/zooniverse/zoo-classification-tally#readme",
   "dependencies": {
-    "dompurify": "^2.0.14",
+    "dompurify": "^2.0.17",
     "panoptes-client": "^3.3.0",
     "pusher-js": "^4.3.1"
   },
