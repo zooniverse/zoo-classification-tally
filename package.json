@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RonaCostello/zoo-classification-tally.git"
+    "url": "git+https://github.com/zooniverse/zoo-classification-tally.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RonaCostello/zoo-classification-tally/issues"
+    "url": "https://github.com/zooniverse/zoo-classification-tally/issues"
   },
-  "homepage": "https://github.com/RonaCostello/zoo-classification-tally#readme",
+  "homepage": "https://github.com/zooniverse/zoo-classification-tally#readme",
   "dependencies": {
     "dompurify": "^2.0.14",
     "lodash": "^4.17.19",
@@ -35,5 +35,9 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=7"
   }
 }
