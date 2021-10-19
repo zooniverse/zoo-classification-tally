@@ -44,4 +44,6 @@ Note the above and how query params must start with a `?` character and must be 
 
 `npm start` builds and runs the site locally. N.B this runs on local.zooniverse.org to prevent a CORS error while trying to access the Zooniverse stats API.
 
-`npm deploy` builds and deploys to https://tally.zooniverse.org/
+`npm build` builds index.html and JS files
+
+`npm clean` removes build artefacts

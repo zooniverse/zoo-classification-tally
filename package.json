@@ -7,9 +7,8 @@
     "start-local": "webpack-dev-server --config ./webpack.dev.js",
     "start": "webpack-dev-server --config ./webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf ./main.*.js",
-    "build": "webpack",
-    "deploy": "npm run clean && npm run build && bin/deploy.sh"
+    "clean": "rm -rf build/*",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
