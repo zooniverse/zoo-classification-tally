@@ -1,4 +1,3 @@
-import _ from "lodash";
 import DOMPurify from 'dompurify';
 import $ from 'jquery';
 import Pusher from 'pusher-js';
