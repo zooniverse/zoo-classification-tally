@@ -18,7 +18,8 @@ module.exports = {
   devServer: {
     host: 'local.zooniverse.org',
     port: 8080,
-    hot: true
+    hot: true,
+    https: true
   },
   cache: true,
   performance: {
