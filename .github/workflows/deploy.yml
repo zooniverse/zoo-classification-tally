@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Zoo Classification Tally Production 
 
 on:
   # Run this workflow on push to production-release tag (via chatops)
@@ -62,8 +62,8 @@ jobs:
               "author_name": "${{ github.actor }}",
               "author_link": "https://github.com/${{ github.actor }}/",
               "author_icon": "https://github.com/${{ github.actor }}.png?size=40",
-              "title": "NfN Field Book Production deploy complete",
-              "title_link": "https://field-book.notesfromnature.org",
+              "title": "Zoo Classification Tally Production deploy complete",
+              "title_link": "https://tally.zooniverse.org",
               "fields": [
                   {
                       "title": "Status",
